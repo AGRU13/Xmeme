@@ -1,0 +1,24 @@
+.content-header{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 5vh;
+    background-color: azure;
+    .logo{
+        display: flex;
+        align-items: center;
+        // justify-content: ;
+        width: 20%;
+        margin-left: 2vw;
+        &__image{
+            height: 6vh;
+            align-items: center;
+        }
+        &__name{
+
+        }
+    }
+}
