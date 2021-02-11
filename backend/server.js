@@ -1,12 +1,15 @@
 const express=require('express');
+const cors = require('cors')
 const mongoose = require('mongoose');
 const route=require('./memes');
 const app=express(); 
 
+app.use(cors());
 app.use(express.json());
 app.use('/memes',route);
 
 mongoose.connect("mongodb://localhost/memesCollection", {
+    useFindAndModify: false,
     useNewUrlParser: true})
     .then(() => console.log("Connected to mongodb server"))
     .catch(err => console.error("error in connecting to mongodb", err));
