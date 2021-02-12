@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
@@ -12,15 +13,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
 });  
 
-const AddMemeModal=({open,handleClose,getData})=>{
-
-    const nameRef=useRef('');
+const EditMemeModal=({open,handleClose,id,getData})=>{
+    console.log(id);
     const captionRef=useRef('');
     const urlRef=useRef('');
 
-    const sendMeme=()=>{
-        axios.post("http://localhost:8081/memes",{
-            name: nameRef.current.value,
+    const patchMeme=()=>{
+        if(!captionRef.current.value&&!urlRef.current.value) {
+            handleClose();
+            return ;
+        }
+
+        axios.patch(`http://localhost:8081/memes/${id}`,{
             caption: captionRef.current.value,
             url: urlRef.current.value 
         })
@@ -33,21 +37,11 @@ const AddMemeModal=({open,handleClose,getData})=>{
 
     return(
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" TransitionComponent={Transition}>
-            <DialogTitle id="form-dialog-title">POST A MEME</DialogTitle>
+            <DialogTitle id="form-dialog-title">EDIT A MEME</DialogTitle>
             <DialogContent>
-                <TextField
-                    autoFocus
-                    margin="normal"
-                    id="name"
-                    label="Name"
-                    type="text"
-                    fullWidth
-                    required
-                    placeholder="minimum 3 maximum 255 characters"
-                    inputRef={nameRef}
-                    minLength='3'
-                    maxLength='255'
-                />
+                <DialogContentText>
+                    Enter the value of caption/url or both to change them
+                </DialogContentText>
                 <TextField
                     autoFocus
                     margin="normal"
@@ -56,7 +50,6 @@ const AddMemeModal=({open,handleClose,getData})=>{
                     type="text"
                     fullWidth
                     placeholder="minimum 3 maximum 255 characters"
-                    required
                     inputRef={captionRef}
                     minLength='3'
                     maxLength='255'
@@ -69,7 +62,6 @@ const AddMemeModal=({open,handleClose,getData})=>{
                     type="url"  
                     fullWidth
                     placeholder="Enter an image url starting with http"
-                    required
                     inputRef={urlRef}
                     minLength='10'
                     maxLength='2048'
@@ -79,12 +71,11 @@ const AddMemeModal=({open,handleClose,getData})=>{
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={sendMeme} color="primary">
+                <Button onClick={patchMeme} color="primary">
                     Submit
                 </Button>
             </DialogActions>
         </Dialog>
     );
 }
-
-export default AddMemeModal;
+export default EditMemeModal;

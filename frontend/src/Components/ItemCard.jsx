@@ -14,23 +14,26 @@ const useStyles = makeStyles({
         margin: 20,
     },
     media: {
-        height:300,
+        height:'30vh',
     },
-    text: {
-        overflow: 'hidden'
+    image:{
+        height:'auto',
+        width:'100%',
+        maxHeight: '100%',
+        maxWidth:'100%'
     }
 });
 
-export default function ItemCard({name,caption,url}) {
+export default function ItemCard({id,name,caption,url,deleteMeme,handleClickOpen}) {
     const classes = useStyles();
-
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image={url}
-                />
+                >
+                    <img src={url} className={classes.image}></img>
+                </CardMedia>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {name}
@@ -41,10 +44,10 @@ export default function ItemCard({name,caption,url}) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" margin="dense" onClick={()=>handleClickOpen(id)}>
                     Edit
                 </Button>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" margin="dense"  onClick={()=>deleteMeme(id)}>
                     Delete
                 </Button>
             </CardActions>

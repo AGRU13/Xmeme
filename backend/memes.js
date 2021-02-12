@@ -19,7 +19,7 @@ const memeSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 10,
-        maxlength: 255
+        maxlength: 2048
     }
 });
 
@@ -44,18 +44,28 @@ router.post('/', async (req, res) => {
         const meme = await MemeModel.create(req.body);
         res.status(201).json({ id:meme.id });
     } catch (err) {
-        res.status(500);
+        res.sendStatus(500);
         console.error("error during post:", err);
     }
 });
 
 router.get('/',async(req,res)=>{
     try{
-        const memes=await MemeModel.find().sort({ _id : -1 }).limit(100);
+        
+        let skip=0,count;
+        if(req.query.skip) skip=parseInt(req.query.skip);
+        count=await MemeModel.countDocuments();
+        if(skip>=count) return res.status(200).send([]);
+
+        const memes=await MemeModel.find()
+                                    .sort({ _id : -1 })
+                                    .skip(skip)
+                                    .limit(100);
+
         res.status(200).send(memes);
     }catch(err){
         //empty
-        res.send(500);
+        res.sendStatus(500);
         console.error("error in getting 100 memes",err);
     }
 });
@@ -79,9 +89,9 @@ router.patch('/:id',async(req,res)=>{
 
         const meme = await MemeModel.findById(req.params.id);
         if(!meme) return res.sendStatus(404);
+        if(req.body.caption) meme.caption=req.body.caption;
+        if(req.body.url) meme.url=req.body.url;
 
-        meme.set(req.body);
-        console.log("patch meme:",meme);
         await meme.save();
         res.sendStatus(204);
     }catch(err){

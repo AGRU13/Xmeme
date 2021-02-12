@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
   
-const Navbar=()=>{
+const Navbar=({getData})=>{
     const [open,setOpen]=useState(false);
 
     const handleClickOpen = () => {
@@ -45,14 +45,13 @@ const Navbar=()=>{
         setOpen(false);
     };
     
-    // const addMeme=()=>{        
-    // }
     const classes = useStyles();
     return(
         <div className={classes.root} >
             <AddMemeModal 
                 open={open}
                 handleClose={handleClose}
+                getData={getData}
             />
             <AppBar position="static" className={classes.appbar}>
                 <Toolbar>
