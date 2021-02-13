@@ -1,25 +1,40 @@
 const express=require('express');
-const cors = require('cors')
+const cors = require('cors');
+const winston = require('winston');
 const mongoose = require('mongoose');
 const route=require('./memes');
 const app=express(); 
+
+winston.add(new winston.transports.File({filename:'logfile.log'}));
+winston.add(new winston.transports.Console({colorize: true, prettyPrint: true}));
+
+mongoose.connect("mongodb://localhost/memesCollection", {
+    useFindAndModify: false,
+    useNewUrlParser: true})
+    .then(() => winston.info("Connected to mongodb server"))
+    .catch(err => winston.error("error in connecting to mongodb", err));
+
+const PORT=8081;
 
 app.use(cors());
 app.use(express.json());
 app.use('/memes',route);
 
-mongoose.connect("mongodb://localhost/memesCollection", {
-    useFindAndModify: false,
-    useNewUrlParser: true})
-    .then(() => console.log("Connected to mongodb server"))
-    .catch(err => console.error("error in connecting to mongodb", err));
+const swaggerUi = require('swagger-ui-express'), 
+    swaggerDocument = require('./swagger.json');
 
-
-const PORT=8081;
-
-app.all("*",(req,res)=>{
-    res.status(404);
-    res.send("path doesn't exist");
+process.on('uncaughtException',(ex)=>{
+    winston.error("We got an uncaught exception",ex);
 });
 
-app.listen(PORT,()=> console.log(`running on port: ${PORT}`));
+process.on('unhandledRejection',(ex)=>{
+    winston.error("We got an unhandled rejection",ex);
+});
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.all("*",(req,res)=>{
+    res.status(404).send({errors:["Invalid url"]});
+});
+
+app.listen(PORT,()=> winston.info(`running on port: ${PORT}`));

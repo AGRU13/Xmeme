@@ -34,6 +34,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
     return(
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" TransitionComponent={Transition}>
             <DialogTitle id="form-dialog-title">POST A MEME</DialogTitle>
+            <form onSubmit={sendMeme}>
             <DialogContent>
                 <TextField
                     autoFocus
@@ -45,8 +46,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
                     required
                     placeholder="minimum 3 maximum 255 characters"
                     inputRef={nameRef}
-                    minLength='3'
-                    maxLength='255'
+                    inputProps={{ maxLength:255, minLength:3}}
                 />
                 <TextField
                     autoFocus
@@ -58,8 +58,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
                     placeholder="minimum 3 maximum 255 characters"
                     required
                     inputRef={captionRef}
-                    minLength='3'
-                    maxLength='255'
+                    inputProps={{ maxLength:255, minLength:3}}
                 />
                 <TextField
                     autoFocus
@@ -71,18 +70,18 @@ const AddMemeModal=({open,handleClose,getData})=>{
                     placeholder="Enter an image url starting with http"
                     required
                     inputRef={urlRef}
-                    minLength='10'
-                    maxLength='2048'
+                    inputProps={{ maxLength:255, minLength:3}}
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={sendMeme} color="primary">
+                <Button type="submit" color="primary">
                     Submit
                 </Button>
             </DialogActions>
+            </form>
         </Dialog>
     );
 }

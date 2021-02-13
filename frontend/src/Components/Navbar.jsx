@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { grey } from '@material-ui/core/colors';
+import { indigo, grey ,amber} from '@material-ui/core/colors';
 import AddMemeModal from './AddMemeModal';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     appbar:{
-        backgroundColor: grey[50],
+        backgroundColor:indigo[100],
         color: grey[900],
     },
     title: {
@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
     },
+    swagButton:{
+        backgroundColor: amber[300],
+        margin: theme.spacing(1),
+    },
 }));
   
 const Navbar=({getData})=>{
@@ -45,6 +49,10 @@ const Navbar=({getData})=>{
         setOpen(false);
     };
     
+    const openSwagger=()=>{
+        window.open("http://localhost:8081/api-docs","_blank");
+    }
+
     const classes = useStyles();
     return(
         <div className={classes.root} >
@@ -61,6 +69,14 @@ const Navbar=({getData})=>{
                     <Typography variant="h5" className={classes.title}>
                         meme
                     </Typography>
+                    <Button
+                        variant="contained"
+                        className={classes.swagButton}
+                        endIcon={<Icon>send</Icon>}
+                        onClick={openSwagger}
+                    >
+                        Swagger
+                    </Button>
                     <Button
                         variant="contained"
                         color="secondary"

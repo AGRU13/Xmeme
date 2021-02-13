@@ -1,0 +1,258 @@
+{ 
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0", 
+        "title": "Xmeme API",
+        "description": "Submission for Crio Winter of Doing Stage 2B",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+            }
+        },
+        "host": "localhost:8081",
+        "basePath": "/",
+        "schemes": ["http"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "paths": {
+            "/memes/": {
+                "get": {
+                    "tags": ["memes"],
+                    "description": "Get latest 100 memes (later can be paginated)",
+                    "operationId": "getMemes",
+                    "responses": {
+                        "200": {
+                            "description": "list of memes ",
+                            "schema": {
+                                "type": "array",
+                                "items":{
+                                    "$ref": "#/definitions/MemeWithId"
+                                }
+                            }
+                        },
+                        "500":{
+                            "description": "Internal Server Error"
+                        }
+                    }
+                },
+                "post": {
+                    "tags": ["memes"],
+                    "description": "Add a new meme",
+                    "operationId": "addMeme",
+                    "parameters": [{
+                        "in": "body",
+                        "name": "body",
+                        "description": "meme that needs to be added",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/MemeWithoutId"
+                        }
+                    }],
+                    "responses": {
+                        "201":{
+                            "description": "Succesfully added the meme",
+                            "schema" : {
+                                "$ref": "#/definitions/IdResponse"
+                            }
+                        },
+                        "400":{
+                            "description": "Syntax of the request body is not correct",
+                            "schema" : {
+                                "$ref": "#/definitions/ErrorResponse"
+                            }
+                        },
+                        "409":{
+                            "description": "meme with exact same body already exists",
+                            "schema" : {
+                                "$ref": "#/definitions/ErrorResponse"
+                            }
+                        },
+                        "500":{
+                            "description": "Internal Server Error"
+                        }
+                    }
+                }
+            },
+            "/memes/{memeId}":{
+                "get":{
+                    "tags":["memes"],
+                    "description": "Returns a single meme",
+                    "operationId": "getMemeById",
+                    "parameters":[{
+                        "name":"memeId",
+                        "in": "path",
+                        "description": "id of the meme to return",
+                        "required": true,
+                        "type": "string",
+                        "format": "byte"
+                    }],
+                    "responses":{
+                        "200":{
+                            "description":"Succesfully retrieved",
+                            "schema":{
+                                "$ref":"#/definitions/MemeWithId"
+                            }
+                        },
+                        "400":{
+                            "description": "Invalid Id supplied",
+                            "schema" : {
+                                "$ref": "#/definitions/ErrorResponse"
+                            }
+                        },
+                        "404":{
+                            "description": "Meme not found"
+                        },
+                        "500":{
+                            "description": "Internal Server Error"
+                        }
+                    } 
+                },
+                "delete":{
+                    "tags":["memes"],
+                    "description": "Deletes a meme",
+                    "operationId": "deleteMeme",
+                    "parameters":[{
+                        "name":"memeId",
+                        "in": "path",
+                        "description": "id of the meme to delete",
+                        "required": true,
+                        "type": "string",
+                        "format": "byte"
+                    }],
+                    "responses":{
+                        "200":{
+                            "description":"Succesfully deleted",
+                            "schema":{
+                                "$ref":"#/definitions/MemeWithId"
+                            }
+                        },
+                        "400":{
+                            "description": "Invalid Id supplied",
+                            "schema" : {
+                                "$ref": "#/definitions/ErrorResponse"
+                            }
+                        },
+                        "404":{
+                            "description": "Meme not found"
+                        },
+                        "500":{
+                            "description": "Internal Server Error"
+                        }
+                    } 
+                },
+                "patch":{
+                    "tags":["memes"],
+                    "description": "Updates a meme caption/url or both",
+                    "operationId": "updateMeme",
+                    "parameters":[{
+                        "name":"memeId",
+                        "in": "path",
+                        "description": "id of the meme to patch",
+                        "required": true,
+                        "type": "string",
+                        "format": "byte"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "data about the meme that needs to be patched",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/PatchMeme"
+                        }
+                    }],
+                    "responses":{
+                        "204":{
+                            "description":"Succesfully patched"
+                        },
+                        "400":{
+                            "description": "Invalid Id supplied or syntax of data is not correct",
+                            "schema" : {
+                                "$ref": "#/definitions/ErrorResponse"
+                            }
+                        },
+                        "404":{
+                            "description": "Meme not found"
+                        },
+                        "500":{
+                            "description": "Internal Server Error"
+                        }
+                    } 
+                }
+            }
+        },
+        "definitions": {
+            "MemeWithoutId": {
+                "type": "object",
+                "properties": {
+                    "name":{
+                        "type" :"string",
+                        "format": "byte"
+                    },
+                    "caption":{
+                        "type": "string",
+                        "format": "byte"
+                    },
+                    "url":{
+                        "type": "string",
+                        "format": "url"
+                    }
+                }
+            },
+            "MemeWithId":{
+                "type":"object",
+                "properties":{
+                    "name":{
+                        "type" :"string",
+                        "format": "byte"
+                    },
+                    "caption":{
+                        "type": "string",
+                        "format": "byte"
+                    },
+                    "url":{
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "id":{
+                        "type":"string",
+                        "format":"byte"
+                    }
+                }
+            },
+            "PatchMeme":{
+                "type":"object",
+                "properties":{
+                    "caption":{
+                        "type": "string",
+                        "format": "byte"
+                    },
+                    "url":{
+                        "type": "string",
+                        "format": "url"
+                    }
+                }
+            },
+            "IdResponse":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string",
+                        "format":"byte"
+                    }
+                }
+            },
+            "ErrorResponse":{
+                "type":"object",
+                "properties":{
+                    "errors":{
+                       "type":"array",
+                       "items":{
+                           "type": "string",
+                           "format": "byte"
+                       }
+                    }
+                }
+            }
+        }
+}

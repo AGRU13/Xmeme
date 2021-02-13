@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const winston = require('winston');
+const Joi = require('joi');
 const router = express.Router();
 
 const memeSchema = new mongoose.Schema({
@@ -33,25 +35,30 @@ const MemeModel = mongoose.model('Memes', memeSchema);
 
 router.post('/', async (req, res) => {
     try {
-        //validation
-        console.log(req.body);
-        //check if body is same as mememodel
+        const schema = Joi.object({
+            name: Joi.string().min(3).max(255).required(),
+            caption: Joi.string().min(3).max(255).required(),
+            url: Joi.string().uri().min(10).max(2048).required()
+        });
+        const {error} = schema.validate(req.body);
+        if(error)
+            return res.status(400).send({errors: [error.details[0].message]})
+        
         const exists = await MemeModel.find(req.body);
 
         if(exists.length)
-            return res.status(409).send({errors :['payload already exists']})
+            return res.status(409).send({errors :['payload already exists']});
 
         const meme = await MemeModel.create(req.body);
         res.status(201).json({ id:meme.id });
     } catch (err) {
         res.sendStatus(500);
-        console.error("error during post:", err);
+        winston.error("error during post request",err);
     }
 });
 
 router.get('/',async(req,res)=>{
     try{
-        
         let skip=0,count;
         if(req.query.skip) skip=parseInt(req.query.skip);
         count=await MemeModel.countDocuments();
@@ -64,30 +71,41 @@ router.get('/',async(req,res)=>{
 
         res.status(200).send(memes);
     }catch(err){
-        //empty
         res.sendStatus(500);
-        console.error("error in getting 100 memes",err);
+        winston.error("error during get request for 100 memes",err);
     }
 });
 
 router.get('/:id', async (req, res) => {
     try {
-        //validate the id 
+        if(!mongoose.Types.ObjectId.isValid(req.params.id))
+            return res.status(400).send({errors:['id format is not valid']});
+
         const meme = await MemeModel.findById(req.params.id);
         if(!meme)  return res.sendStatus(404);
 
         res.status(200).send(meme);
     } catch (err) {
-        res.sendStatus(404);
-        console.log("error during fetching by id", err);
+        res.sendStatus(500);
+        winston.error("error during get request for a particular meme",err);
     }
 });
 
 router.patch('/:id',async(req,res)=>{
     try{
-        if(req.body.name) return res.sendStatus(400);
+        if(!mongoose.Types.ObjectId.isValid(req.params.id))
+            return res.status(400).send({errors:['id format is not valid']});
 
+        const schema = Joi.object({
+            caption: Joi.string().min(3).max(255),
+            url: Joi.string().uri().min(10).max(2048)
+        });
+        const {error} = schema.validate(req.body);
+        if(error)
+            return res.status(400).send({errors: [error.details[0].message]})
+        
         const meme = await MemeModel.findById(req.params.id);
+
         if(!meme) return res.sendStatus(404);
         if(req.body.caption) meme.caption=req.body.caption;
         if(req.body.url) meme.url=req.body.url;
@@ -95,20 +113,22 @@ router.patch('/:id',async(req,res)=>{
         await meme.save();
         res.sendStatus(204);
     }catch(err){
-        res.sendStatus(400);
-        console.error("during patch: ",err);
+        res.sendStatus(500); 
+        winston.error("error during patch request",err);
     }
 });
 
 router.delete('/:id',async(req,res) =>{
     try{
-        //validate id
+        if(!mongoose.Types.ObjectId.isValid(req.params.id))
+            return res.status(400).send({errors:['id format is not valid']});
+
         const meme = await MemeModel.findByIdAndRemove(req.params.id);
         if(!meme) return res.sendStatus(404);
         res.status(200).send(meme);
     }catch(err){
-        res.sendStatus(500);
-        console.error("during delete: ",err);
+        res.sendStatus(500); 
+        winston.error("error during delete request",err);
     }
 });
 

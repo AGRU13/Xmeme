@@ -11,6 +11,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.11.15"
+    "joi": "^17.4.0",
+    "mongoose": "^5.11.15",
+    "swagger-ui-express": "^4.1.6",
+    "winston": "^3.3.3"
   }
 }

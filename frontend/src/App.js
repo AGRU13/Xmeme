@@ -10,20 +10,29 @@ function App() {
     const [skip,setSkip]=useState(0);
 
     const getData=(_skip=0)=>{
-        setSkip(_skip);
-        console.log("skip:",`http://localhost:8081/memes?skip=${_skip}`);
-        axios.get(`http://localhost:8081/memes?skip=${_skip}`)
-        .then((response)=>response.data)
-        .then((data)=>{ 
-            if(data.length===0){
-                setHasMore(false);
-                return ;
-            }
-            
-            setMemes(memesData.concat(data)); 
-            console.log(memesData,data);
-        })
-        .catch((error)=>{alert("Something went wrong");console.log(error)});     
+        if(!_skip){
+            axios.get(`http://localhost:8081/memes?skip=${skip}`)
+            .then((response)=>response.data)
+            .then((data)=>{ 
+                setMemes(data); 
+                console.log(memesData,data);
+            })
+            .catch((error)=>{alert("Something went wrong");console.log(error)});      
+        }else{
+            axios.get(`http://localhost:8081/memes?skip=${_skip}`)
+            .then((response)=>response.data)
+            .then((data)=>{ 
+                if(data.length===0){
+                    setHasMore(false);
+                    return ;
+                }
+
+                setSkip(_skip);
+                setMemes(memesData.concat(data)); 
+                console.log(memesData,data);
+            })
+            .catch((error)=>{alert("Something went wrong");console.log(error)});    
+        } 
     }
     
     const deleteMeme=(id)=>{

@@ -7,11 +7,14 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Altimage from './../assests/error.jpg';
+import { indigo } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
         margin: 20,
+        backgroundColor: indigo[50]
     },
     media: {
         height:'30vh',
@@ -32,7 +35,7 @@ export default function ItemCard({id,name,caption,url,deleteMeme,handleClickOpen
                 <CardMedia
                     className={classes.media}
                 >
-                    <img src={url} className={classes.image}></img>
+                    <img src={url} alt={Altimage} className={classes.image}></img>
                 </CardMedia>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
