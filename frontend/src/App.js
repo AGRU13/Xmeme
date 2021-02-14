@@ -15,7 +15,6 @@ function App() {
             .then((response)=>response.data)
             .then((data)=>{ 
                 setMemes(data); 
-                console.log(memesData,data);
             })
             .catch((error)=>{alert("Something went wrong")});      
         }else{
@@ -29,7 +28,6 @@ function App() {
 
                 setSkip(_skip);
                 setMemes(memesData.concat(data)); 
-                console.log(memesData,data);
             })
             .catch((error)=>{alert("Something went wrong")});    
         } 
