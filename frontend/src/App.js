@@ -25,10 +25,7 @@ function App() {
             })
             .catch((error)=>{alert("Something went wrong")});      
         }else{
-<<<<<<< HEAD
-=======
             //when new page is requested so skip is increased
->>>>>>> 77fbbda
             axios.get(`https://xmeme-agru.herokuapp.com/memes/?skip=${_skip}`)
             .then((response)=>response.data)
             .then((data)=>{ 
