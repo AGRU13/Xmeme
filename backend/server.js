@@ -9,7 +9,7 @@ const app=express();
 winston.add(new winston.transports.File({filename:'logfile.log'}));
 winston.add(new winston.transports.Console({colorize: true, prettyPrint: true}));
 
-const uri = "mongodb+srv://ayush:meme123@xmemecluster.yv9dj.mongodb.net/xmeme?retryWrites=true&w=majority";
+const uri = "mongodb://localhost/memesCollection";
 
 mongoose.connect(uri, {
     useFindAndModify: false,
