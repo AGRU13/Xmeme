@@ -14,7 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });  
 
 const EditMemeModal=({open,handleClose,id,getData})=>{
-    console.log(id);
     const captionRef=useRef('');
     const urlRef=useRef('');
 
@@ -23,16 +22,23 @@ const EditMemeModal=({open,handleClose,id,getData})=>{
             handleClose();
             return ;
         }
+        let patchObj={};
+        if(captionRef.current.value.length) patchObj.caption=captionRef.current.value;
+        if(urlRef.current.value.legth) patchObj.url=urlRef.current.value;
 
+<<<<<<< HEAD
         axios.patch(`https://xmeme-agru.herokuapp.com/memes/${id}`,{
             caption: captionRef.current.value,
             url: urlRef.current.value 
         })
+=======
+        axios.patch(`https://xmeme-agru.herokuapp.com/memes/${id}`,patchObj)
+>>>>>>> 77fbbda
             .then(setTimeout(() => {
                 getData()
                 handleClose();
             }, 1000))
-            .catch((err)=>{console.log(err);alert("something went wrong")});
+            .catch((err)=>{alert("something went wrong")});
     }
 
     return(

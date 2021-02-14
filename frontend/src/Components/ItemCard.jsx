@@ -23,7 +23,7 @@ const useStyles = makeStyles({
         height:'auto',
         width:'100%',
         maxHeight: '100%',
-        maxWidth:'100%'
+        maxWidth:'100%',
     }
 });
 
@@ -35,7 +35,7 @@ export default function ItemCard({id,name,caption,url,deleteMeme,handleClickOpen
                 <CardMedia
                     className={classes.media}
                 >
-                    <img src={url} alt={Altimage} className={classes.image}></img>
+                    <img src={url} onError={(e)=>{e.target.onerror = null; e.target.src=`${Altimage}`}} className={classes.image}></img>
                 </CardMedia>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">

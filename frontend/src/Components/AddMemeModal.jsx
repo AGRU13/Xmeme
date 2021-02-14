@@ -28,7 +28,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
                 getData()
                 handleClose();
             }, 1000))
-            .catch((err)=>{console.log(err);alert("something went wrong")});
+            .catch((err)=>{alert("something went wrong")});
     }
 
     return(
