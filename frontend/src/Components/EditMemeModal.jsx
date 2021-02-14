@@ -22,11 +22,11 @@ const EditMemeModal=({open,handleClose,id,getData})=>{
             handleClose();
             return ;
         }
+        let patchObj={};
+        if(captionRef.current.value.length) patchObj.caption=captionRef.current.value;
+        if(urlRef.current.value.legth) patchObj.url=urlRef.current.value;
 
-        axios.patch(`https://xmeme-agru.herokuapp.com/memes/${id}`,{
-            caption: captionRef.current.value,
-            url: urlRef.current.value 
-        })
+        axios.patch(`https://xmeme-agru.herokuapp.com/memes/${id}`,patchObj)
             .then(setTimeout(() => {
                 getData()
                 handleClose();

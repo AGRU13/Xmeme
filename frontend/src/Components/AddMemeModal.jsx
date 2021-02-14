@@ -19,11 +19,11 @@ const AddMemeModal=({open,handleClose,getData})=>{
     const urlRef=useRef('');
 
     const sendMeme=()=>{
-        axios.post("https://xmeme-agru.herokuapp.com/memes",{
+        axios.post("http://localhost:8081/memes",{
             name: nameRef.current.value,
             caption: captionRef.current.value,
             url: urlRef.current.value 
-        })
+        },{withCredentials:true})
             .then(setTimeout(() => {
                 getData()
                 handleClose();

@@ -36,7 +36,7 @@ function App() {
     const deleteMeme=(id)=>{
         axios.delete(`https://xmeme-agru.herokuapp.com/memes/${id}`)
             .then(()=>{
-                const temp=[...memesData];
+                let temp=[...memesData];
                 temp.splice(temp.findIndex(a=>a.id==id),1);
                 setMemes(temp);
             })
