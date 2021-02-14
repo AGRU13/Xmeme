@@ -9,9 +9,9 @@
             "url": "https://opensource.org/licenses/MIT"
             }
         },
-        "host": "localhost:8081",
+        "host": "xmeme-agru.herokuapp.com",
         "basePath": "/",
-        "schemes": ["http"],
+        "schemes": ["https"],
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "paths": {
