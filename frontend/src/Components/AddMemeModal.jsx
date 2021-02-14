@@ -19,7 +19,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
     const urlRef=useRef('');
 
     const sendMeme=()=>{
-        axios.post("http://localhost:8081/memes",{
+        axios.post("https://xmeme-agru.herokuapp.com/memes",{
             name: nameRef.current.value,
             caption: captionRef.current.value,
             url: urlRef.current.value 
@@ -28,7 +28,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
                 getData()
                 handleClose();
             }, 1000))
-            .catch((err)=>{console.log(err);alert("something went wrong")});
+            .catch((err)=>{alert("something went wrong")});
     }
 
     return(

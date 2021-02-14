@@ -14,7 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });  
 
 const EditMemeModal=({open,handleClose,id,getData})=>{
-    console.log(id);
     const captionRef=useRef('');
     const urlRef=useRef('');
 
@@ -24,7 +23,7 @@ const EditMemeModal=({open,handleClose,id,getData})=>{
             return ;
         }
 
-        axios.patch(`http://localhost:8081/memes/${id}`,{
+        axios.patch(`https://xmeme-agru.herokuapp.com/memes/${id}`,{
             caption: captionRef.current.value,
             url: urlRef.current.value 
         })
@@ -32,7 +31,7 @@ const EditMemeModal=({open,handleClose,id,getData})=>{
                 getData()
                 handleClose();
             }, 1000))
-            .catch((err)=>{console.log(err);alert("something went wrong")});
+            .catch((err)=>{alert("something went wrong")});
     }
 
     return(

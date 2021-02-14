@@ -11,15 +11,15 @@ function App() {
 
     const getData=(_skip=0)=>{
         if(!_skip){
-            axios.get(`http://localhost:8081/memes?skip=${skip}`)
+            axios.get(`https://xmeme-agru.herokuapp.com/memes/?skip=${skip}`)
             .then((response)=>response.data)
             .then((data)=>{ 
                 setMemes(data); 
                 console.log(memesData,data);
             })
-            .catch((error)=>{alert("Something went wrong");console.log(error)});      
+            .catch((error)=>{alert("Something went wrong")});      
         }else{
-            axios.get(`http://localhost:8081/memes?skip=${_skip}`)
+            axios.get(`https://xmeme-agru.herokuapp.com/memes/?skip=${_skip}`)
             .then((response)=>response.data)
             .then((data)=>{ 
                 if(data.length===0){
@@ -31,18 +31,18 @@ function App() {
                 setMemes(memesData.concat(data)); 
                 console.log(memesData,data);
             })
-            .catch((error)=>{alert("Something went wrong");console.log(error)});    
+            .catch((error)=>{alert("Something went wrong")});    
         } 
     }
     
     const deleteMeme=(id)=>{
-        axios.delete(`http://localhost:8081/memes/${id}`)
+        axios.delete(`https://xmeme-agru.herokuapp.com/memes/${id}`)
             .then(()=>{
                 const temp=[...memesData];
                 temp.splice(temp.findIndex(a=>a.id==id),1);
                 setMemes(temp);
             })
-            .catch((error)=>{alert("Something went wrong");console.log(error)}); 
+            .catch((error)=>{alert("Something went wrong")}); 
     }
 
     return (
