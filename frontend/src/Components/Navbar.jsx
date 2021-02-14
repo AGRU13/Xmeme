@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor:indigo[100],
         color: grey[900],
     },
+    toolbar:{
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column',
+            justifyContent: 'center',
+          },
+    },
     title: {
         flexGrow: 1,
     },
@@ -50,7 +56,7 @@ const Navbar=({getData})=>{
     };
     
     const openSwagger=()=>{
-        window.open("http://localhost:8081/api-docs","_blank");
+        window.open("https://xmeme-agru.herokuapp.com/api-docs/","_blank");
     }
 
     const classes = useStyles();
@@ -62,7 +68,7 @@ const Navbar=({getData})=>{
                 getData={getData}
             />
             <AppBar position="static" className={classes.appbar}>
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <Icon classes={classes.iconRoot}>
                         <img className={classes.imageIcon} src={Logo}/>
                     </Icon>
