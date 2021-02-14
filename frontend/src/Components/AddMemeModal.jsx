@@ -23,7 +23,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
             name: nameRef.current.value,
             caption: captionRef.current.value,
             url: urlRef.current.value 
-        },{withCredentials:true})
+        })
             .then(setTimeout(() => {
                 getData()
                 handleClose();
