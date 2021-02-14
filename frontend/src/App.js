@@ -5,11 +5,18 @@ import Navbar from "./Components/Navbar";
 import Container from "./Components/Container";
 
 function App() {
+
+    //array to store all the memes data
     const [memesData,setMemes]=useState([]);
+
+    //variable to know if more data is present in the data base
     const [hasMore,setHasMore]=useState(true);
+
+    //variable to keep count of how many memes to skip for pagination
     const [skip,setSkip]=useState(0);
 
     const getData=(_skip=0)=>{
+        //if no new pages are requested
         if(!_skip){
             axios.get(`https://xmeme-agru.herokuapp.com/memes/?skip=${skip}`)
             .then((response)=>response.data)
@@ -18,6 +25,7 @@ function App() {
             })
             .catch((error)=>{alert("Something went wrong")});      
         }else{
+            //when new page is requested so skip is increased
             axios.get(`https://xmeme-agru.herokuapp.com/memes/?skip=${_skip}`)
             .then((response)=>response.data)
             .then((data)=>{ 
