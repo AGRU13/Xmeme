@@ -3,14 +3,19 @@ const cors = require('cors');
 const winston = require('winston');
 const mongoose = require('mongoose');
 const route=require('./memes');
+
 const app=express(); 
 
 winston.add(new winston.transports.File({filename:'logfile.log'}));
 winston.add(new winston.transports.Console({colorize: true, prettyPrint: true}));
 
-mongoose.connect("mongodb://localhost/memesCollection", {
+const uri = "mongodb+srv://ayush:meme123@xmemecluster.yv9dj.mongodb.net/xmeme?retryWrites=true&w=majority";
+
+mongoose.connect(uri, {
     useFindAndModify: false,
-    useNewUrlParser: true})
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+    })
     .then(() => winston.info("Connected to mongodb server"))
     .catch(err => winston.error("error in connecting to mongodb", err));
 
