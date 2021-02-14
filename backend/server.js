@@ -19,7 +19,7 @@ mongoose.connect(uri, {
     .then(() => winston.info("Connected to mongodb server"))
     .catch(err => winston.error("error in connecting to mongodb", err));
 
-const PORT=8081;
+const PORT=process.env.PORT||8081;
 
 app.use(cors());
 app.use(express.json());
