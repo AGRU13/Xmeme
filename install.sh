@@ -19,4 +19,3 @@ sudo systemctl status mongod
 
 sudo systemctl enable mongod
 
-mongo --eval 'db.runCommand({ connectionStatus: 1 })'
