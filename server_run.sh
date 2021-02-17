@@ -3,4 +3,5 @@ cd backend
 #installing dependecies
 npm install
 
-node server.js
+node server.js;
+
