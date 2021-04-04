@@ -1,5 +1,6 @@
 # Xmeme
 share your memes with the world
+
 It is an image hosting site.
 
 <img src="./images/site.png">
@@ -18,7 +19,7 @@ It is an image hosting site.
 
 ## Build Guide
 
-For Linux distros given script files can be run to install all the necessary things.
+For Linux distros given script file, install.sh can be run to install all the necessary things.
 
 Otherwise first install node and npm, than install,configure and start mongodb service.
 
