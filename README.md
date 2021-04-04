@@ -13,9 +13,9 @@ It is an image hosting site.
 
 ## Technical Stack
 
-|                  UI Library                   |                   Styling                    |              Backend Framework               |
-| :-------------------------------------------: | :------------------------------------------: | :------------------------------------------: |
-| <img src="./images/react-logo.png" height="100px"> | <img src="./images/sass-logo.png" height="100px"> | <img src="./images/express.png" height="100px"> |
+|                  UI Library                   |                   Styling                    |              Backend Framework               |                   Database                   |
+| :-------------------------------------------: | :------------------------------------------: | :------------------------------------------: | :------------------------------------------: |
+| <img src="./images/react-logo.png" height="100px"> | <img src="./images/sass-logo.png" height="100px"> | <img src="./images/express.png" height="100px"> |<img src="./images/mongodb.svg" height="100px"> |
 
 ## Build Guide
 
