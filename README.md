@@ -47,3 +47,5 @@ backend link:- https://xmeme-agru.herokuapp.com/memes
 
 swagger-ui:- https://xmeme-agru.herokuapp.com/api-docs/
 
+### [The frontend is made using create-react-app](https://github.com/facebook/create-react-app#creating-an-app)
+
