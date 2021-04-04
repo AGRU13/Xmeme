@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
 
+//for the modal transition
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
 });  
@@ -18,6 +19,7 @@ const AddMemeModal=({open,handleClose,getData})=>{
     const captionRef=useRef('');
     const urlRef=useRef('');
 
+    //post request to the backend
     const sendMeme=()=>{
         axios.post("https://xmeme-agru.herokuapp.com/memes",{
             name: nameRef.current.value,

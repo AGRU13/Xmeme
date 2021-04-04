@@ -41,6 +41,7 @@ function App() {
         } 
     }
     
+    //delete request to backend
     const deleteMeme=(id)=>{
         axios.delete(`https://xmeme-agru.herokuapp.com/memes/${id}`)
             .then(()=>{
