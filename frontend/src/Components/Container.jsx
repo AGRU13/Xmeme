@@ -15,7 +15,7 @@ const useStyles = makeStyles({
         position: "relative",
         top: "100px"
     }
-})
+});
 
 const Container = ({ getData, memesData, deleteMeme, skip, hasMore }) => {
     

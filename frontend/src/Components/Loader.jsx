@@ -24,5 +24,4 @@ const Loader = ({ size = 60, containerStyle }) => {
     )
 }
 
-
 export default Loader;
