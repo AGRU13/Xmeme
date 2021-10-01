@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+p.MuiTypography-root.MuiTypography-body2.MuiTypography-colorTextSecondary {
+  color: #0d0d26;
+}
+
+h2.MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom {
+  font-weight:bolder;
+  color: #a5184a;
+}
