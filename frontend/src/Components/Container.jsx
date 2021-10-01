@@ -1,11 +1,25 @@
 import React, { useEffect,useState } from 'react';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core'
 import InfiniteScroll from "react-infinite-scroll-component";
 import ItemCard from './ItemCard';
 import EditMemeModal from './EditMemeModal';
 import { indigo } from '@material-ui/core/colors';
+import Loader from './Loader';
 
-const Container=({getData,memesData,deleteMeme,skip,hasMore})=>{
+const useStyles = makeStyles({
+    loader: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        top: "100px"
+    }
+})
+
+const Container = ({ getData, memesData, deleteMeme, skip, hasMore }) => {
+    
+    const classes = useStyles();
 
     useEffect(()=>{
         getData();
@@ -23,6 +37,8 @@ const Container=({getData,memesData,deleteMeme,skip,hasMore})=>{
         setOpen(false);
     };
 
+    if (!memesData?.length) return <Loader containerStyle={classes.loader} />
+
     return (
             <React.Fragment>
             <EditMemeModal open={open} handleClose={handleClose} id={id} getData={getData}/>
@@ -30,7 +46,6 @@ const Container=({getData,memesData,deleteMeme,skip,hasMore})=>{
                 dataLength={memesData.length}
                 next={()=>{getData(skip+100)}}
                 hasMore={hasMore}
-                loader={<h4>Loading...</h4>}
                 endMessage={
                     <p style={{ textAlign: "center" }}>
                         <b>Yay! You have seen it all</b>
