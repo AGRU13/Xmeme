@@ -5,7 +5,17 @@ const mongoose = require('mongoose');
 const route=require('./memes');
 const app=express(); 
 
-//winston is used for logging and here we have defined two paths for it
+//winston is used for logging
+// log format is [ timestamp - level - message ]
+winston.configure({
+    format: winston.format.combine(
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.json(),
+        winston.format.printf(info => `[${info.timestamp}] ${info.level}: ${info.message}`)
+    )
+});
+
+// we have defined two paths for logging
 //first is the file called logfile
 winston.add(new winston.transports.File({filename:'logfile.log'}));
 // and other is the console just like console.log
