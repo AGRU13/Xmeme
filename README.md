@@ -6,7 +6,7 @@ It is an image hosting site.
 <img src="./images/site.png">
 
 # Features
-* Frontend is made using material-ui and the tamplates of components is also taken from the material-ui site.
+* Frontend is made using material-ui and the templates of components is also taken from the material-ui site.
 * Infinte scroll component for scrolling and pagination present. 
 * Requests implemented in the backend- GET, POST, PATCH, DELETE
 * Backend uses MongoDB Atlas for Database, but the repo code uses local database.
