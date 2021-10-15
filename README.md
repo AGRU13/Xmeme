@@ -31,14 +31,14 @@ For backend
 ```bash
 cd backend
 npm install
-node server.js;
+node server.js
 ```
 
 For Frontend
 ```bash
 cd frontend
 npm install
-npm start;
+npm start
 ```
 
 frontend link:- https://xmeme-agru.netlify.app/
