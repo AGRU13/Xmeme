@@ -58,7 +58,7 @@ process.on('unhandledRejection',(ex)=>{
 });
 
 //run the swagger docs on swagger-ui endpoint
-app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //all the rest paths which are not hanled will be handled by this
 app.all("*",(req,res)=>{
