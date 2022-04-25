@@ -24,7 +24,7 @@ const EditMemeModal=({open,handleClose,id,getData})=>{
         }
         let patchObj={};
         if(captionRef.current.value.length) patchObj.caption=captionRef.current.value;
-        if(urlRef.current.value.legth) patchObj.url=urlRef.current.value;
+        if(urlRef.current.value.length) patchObj.url=urlRef.current.value;
 
         axios.patch(`https://xmeme-agru.herokuapp.com/memes/${id}`,patchObj)
             .then(setTimeout(() => {
